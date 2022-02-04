@@ -78,10 +78,10 @@ while True:
         current_price = get_current_price("KRW-BTC")
 
         #print(get_check_point())
-        #print(get_target_price("KRW-BTC", chk_point))
-        #print(get_current_price("KRW-BTC"))
+        print(get_target_price("KRW-BTC", chk_point))
+        print(get_current_price("KRW-BTC"))
         #print(old_total)
-        #print("=======")
+        print("=======")
 
         if chk_point == 0.3: # bull market 
             if (total >= old_total * 1.045 or total <= old_total * 0.955) and old_total > 1000: # +5.5% or -4.5% 
