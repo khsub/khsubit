@@ -78,38 +78,12 @@ while True:
         target_price = get_target_price("KRW-BTC", chk_point)
         current_price = get_current_price("KRW-BTC")
 
-        # print(get_check_point())
-        # print(get_target_price("KRW-BTC", chk_point))
-        # print(get_current_price("KRW-BTC"))
-        # print(old_total)
-        # print("=======")
-
-        if chk_point == 0.3: # bull market 
-            if (total >= old_total * 1.045 or total <= old_total * 0.955) and old_total > 1000: # +5.5% or -4.5% 
-                upbit.sell_market_order("KRW-BTC", amount*0.7) # 70%
-                time.sleep(300) # Stop 5 minute 
-        else: # bear market 
-            if (total >= old_total * 1.035 or total <= old_total * 0.965) and old_total > 1000: # ±3.5%
-                upbit.sell_market_order("KRW-BTC", amount) # All Sell
-                time.sleep(300)
-        
-        if start_time < now < end_time - datetime.timedelta(seconds=10): # non Time 08:50 ~ 09:00
-            if target_price < current_price:
-                krw = get_balance("KRW")
-                if krw > 5000:
-                    upbit.buy_market_order("KRW-BTC", krw*0.6)
-                    time.sleep(300)
-        else:
-            # All sales over 1000
-            if old_total > 1000:
-                if chk_point == 0.3:
-                    if total >= old_total * 1.02 or total <= old_total * 0.98:
-                        upbit.sell_market_order("KRW-BTC", amount)
-                else:
-                    upbit.sell_market_order("KRW-BTC", amount)
-            time.sleep(10)
-
-        time.sleep(1.5)
+        print(get_check_point())
+        print(get_target_price("KRW-BTC", chk_point))
+        print(get_current_price("KRW-BTC"))
+        print(old_total)
+        print("=======")
+        time.sleep(3)
     except Exception as e:
         print(e)
         time.sleep(1)
