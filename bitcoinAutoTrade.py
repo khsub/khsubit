@@ -6,19 +6,19 @@ import numpy as np
 access = "xwSHBhkiNNAWYBxFQ52QdKQy5lx8aCFgJwGKhJSc"
 secret = "imj8DPP97x0gBE6Fo65xs7OvIea7CRlcGNxG9N7Z"
 
-# 변동성 돌파 전략으로 매수 목표가 조회
+# Inquire the purchase target price with a strategy to break through volatility
 def get_target_price(ticker, k):
-    df = pyupbit.get_ohlcv(ticker, interval="day", count=16)
+    df = pyupbit.get_ohlcv(ticker, interval="day", count=16) # search days
     target_price = df.iloc[0]['close'] + (df.iloc[0]['high'] - df.iloc[0]['low']) * k
     return target_price
 
-# 시작 시간 조회
+# Start time
 def get_start_time(ticker):
     df = pyupbit.get_ohlcv(ticker, interval="day", count=1)
     start_time = df.index[0]
     return start_time
 
-# 잔고조
+# Balance inquiry
 def get_balance(ticker):
     balances = upbit.get_balances()
     for b in balances:
@@ -29,14 +29,14 @@ def get_balance(ticker):
                 return 0
     return 0
 
-# 현재가 조회
+# Current price inquiry
 def get_current_price(ticker):
     return pyupbit.get_orderbook(ticker=ticker)["orderbook_units"][0]["ask_price"]
 
-# 상승 & 하락 체크
+# Check Up & Down
 def get_check_point():
     df = pyupbit.get_ohlcv("KRW-BTC")
-    ma5 = df['close'].rolling(window=16).mean()
+    ma5 = df['close'].rolling(window=16).mean() # check days
     last_ma5 = ma5[-2]
     price = pyupbit.get_current_price("KRW-BTC")
     if price > last_ma5:
@@ -44,9 +44,8 @@ def get_check_point():
     else:
         return 0.7
 
-#해당 코인 매수평균단가 반환
+# Coin average price
 def get_avg_buy_price(coin):
-    """잔고 조회"""
     balances = upbit.get_balances()
     for b in balances:
         if b['currency'] == coin:
@@ -57,11 +56,11 @@ def get_avg_buy_price(coin):
         time.sleep(0.2)
     return 0
 
-# 로그인
+# LOGIN
 upbit = pyupbit.Upbit(access, secret)
 print("autotrade start")
 
-# 자동매매 시작
+# start auto trade
 while True:
     try:
         now = datetime.datetime.now()
@@ -78,11 +77,11 @@ while True:
         target_price = get_target_price("KRW-BTC", chk_point)
         current_price = get_current_price("KRW-BTC")
 
-        # print(get_check_point())
-        # print(get_target_price("KRW-BTC", chk_point))
-        # print(get_current_price("KRW-BTC"))
-        # print(old_total)
-        # print("=======")
+        #print(get_check_point())
+        #print(get_target_price("KRW-BTC", chk_point))
+        #print(get_current_price("KRW-BTC"))
+        #print(old_total)
+        #print("=======")
 
         if chk_point == 0.3: # bull market 
             if (total >= old_total * 1.045 or total <= old_total * 0.955) and old_total > 1000: # +5.5% or -4.5% 
