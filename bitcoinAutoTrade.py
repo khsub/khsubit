@@ -8,7 +8,7 @@ secret = "imj8DPP97x0gBE6Fo65xs7OvIea7CRlcGNxG9N7Z"
 
 # Inquire the purchase target price with a strategy to break through volatility
 def get_target_price(ticker, k):
-    df = pyupbit.get_ohlcv(ticker, interval="day", count=16) # search days
+    df = pyupbit.get_ohlcv(ticker, interval="day", count=21) # search days
     target_price = df.iloc[0]['close'] + (df.iloc[0]['high'] - df.iloc[0]['low']) * k
     return target_price
 
@@ -36,7 +36,7 @@ def get_current_price(ticker):
 # Check Up & Down
 def get_check_point():
     df = pyupbit.get_ohlcv("KRW-BTC")
-    ma5 = df['close'].rolling(window=16).mean() # check days
+    ma5 = df['close'].rolling(window=21).mean() # check days
     last_ma5 = ma5[-2]
     price = pyupbit.get_current_price("KRW-BTC")
     if price > last_ma5:
