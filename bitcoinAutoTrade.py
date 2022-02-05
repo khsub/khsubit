@@ -77,42 +77,43 @@ while True:
         target_price = get_target_price("KRW-BTC", chk_point)
         current_price = get_current_price("KRW-BTC")
 
+        print("=======" + str(now) + "=======")
         #print(get_check_point())
-        print(get_target_price("KRW-BTC", chk_point))
-        print(get_current_price("KRW-BTC"))
+        print("Target  : " + str(get_target_price("KRW-BTC", chk_point)))
+        print("Current : " + str(get_current_price("KRW-BTC")))
         #print(old_total)
-        print("=======")
+        print("==========================================================")
 
         if chk_point == 0.3: # bull market 
             if (total >= old_total * 1.045 or total <= old_total * 0.955) and old_total > 1000: # +5.5% or -4.5% 
                 upbit.sell_market_order("KRW-BTC", amount*0.7) # 70%
-                print("1111111111111")
+                print("=======" + str(now) + "======= : 1")
                 time.sleep(300) # Stop 5 minute 
         else: # bear market 
             if (total >= old_total * 1.035 or total <= old_total * 0.965) and old_total > 1000: # ±3.5%
                 upbit.sell_market_order("KRW-BTC", amount) # All Sell
-                print("2222222222222")
+                print("=======" + str(now) + "======= : 2")
                 time.sleep(300)
         
         if start_time < now < end_time - datetime.timedelta(seconds=10): # non Time 08:50 ~ 09:00
             if target_price < current_price:
-                print("3333333333333")
+                print("=======" + str(now) + "======= : 3")
                 krw = get_balance("KRW")
                 if krw > 5000:
                     upbit.buy_market_order("KRW-BTC", krw*0.6)
-                    print("44444444444444")
+                    print("=======" + str(now) + "======= : 4")
                     time.sleep(300)
         else:
             # All sales over 1000
             if old_total > 1000:
                 if chk_point == 0.3:
-                    print("555555555555")
+                    print("=======" + str(now) + "======= : 5")
                     if total >= old_total * 1.02 or total <= old_total * 0.98:
-                        print("6666666666666")
+                        print("=======" + str(now) + "======= : 6")
                         upbit.sell_market_order("KRW-BTC", amount)
                 else:
                     upbit.sell_market_order("KRW-BTC", amount)
-                    print("77777777777777")
+                    print("=======" + str(now) + "======= : 7")
             time.sleep(10)
 
         time.sleep(1.5)
