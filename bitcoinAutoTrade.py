@@ -77,7 +77,7 @@ while True:
         target_price = get_target_price("KRW-BTC", chk_point)
         current_price = get_current_price("KRW-BTC")
 
-        print("=======" + str(now) + "=======")
+        print("=======" + str(now) + "======= : " + str(chk_point))
         #print(get_check_point())
         print("Target  : " + str(get_target_price("KRW-BTC", chk_point)))
         print("Current : " + str(get_current_price("KRW-BTC")))
